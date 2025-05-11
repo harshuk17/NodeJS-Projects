@@ -10,6 +10,12 @@ const path= require('path');
 // node index.js help 
 
 let command=inputArr[0];
+let destinationPath ; 
+let types = {
+    photos: ['JPG'],
+    video: ['MP4'],
+    iphone: ['MOV']
+};
 switch(command){
     case "tree":
         treeFn(inputArr[1]);
@@ -27,35 +33,74 @@ switch(command){
 
 function treeFn(dirPath){
 }
-function organizeFn(dirPath){
-    // Step-1: we have to choose the path where we have to oragnize the files \
-    // console.log('dirPAth is :',dirPath);
-    let destinationPath;
-    if(dirPath== undefined){
-        console.log('kindly enter the path')
+function organizeFn(dirPath) {
+    // Step 1: check if the path is provided
+    if (dirPath == undefined) {
+        console.log("Kindly enter the path");
         return;
-    }else{
-        let doesExist =fs.existsSync(dirPath);
-        if(doesExist){
-            // Step-2: we have to make an folder named as organize folder 
-             destinationPath=path.join(dirPath,"organized-files");
-            if (!fs.existsSync(destinationPath)) {
-            fs.mkdirSync(destinationPath);
-            console.log("Folder created successfully");
-        }else{
-            console.log('kindly enter the correct path');
-            return;
+    }
+
+    // Step 2: check if the given path exists
+    let doesExist = fs.existsSync(dirPath);
+    if (!doesExist) {
+        console.log("Kindly enter the correct path");
+        return;
+    }
+
+    // Step 3: make organized-files folder inside given dirPath
+     destinationPath = path.join(dirPath, "organized-files");
+    if (!fs.existsSync(destinationPath)) {
+        fs.mkdirSync(destinationPath);
+        console.log("Folder 'organized-files' created successfully");
+    } else {
+        console.log("Folder 'organized-files' already exists");
+    }
+
+    // Step 4: organize the files
+    organizeHelper(dirPath, destinationPath);
+}
+
+function organizeHelper(src, dest) {
+    let childNames = fs.readdirSync(src); // all files/folders in src
+
+    for (let i = 0; i < childNames.length; i++) {
+        let childAddress = path.join(src, childNames[i]);
+        let isFile = fs.lstatSync(childAddress).isFile(); // use lstatSync
+
+        if (isFile) {
+            // console.log("File found:", childNames[i]);
+            // You can implement logic here to move/categorize files into folders
+            let category= getCategory(childNames[i]);
+
+            sendFile(childAddress,destinationPath,category);
         }
     }
-        oragnizeHelper(dirPath,destinationPath);
-    }
-    // Step-4:  cut/copy the files into the category folder
-    function oragnizeHelper(src,dest){
-        // Step-3: identify the type of files and categorize them 
-        let childNames=fs.readdirSync(src);
-        console.log(childNames);
-     }
 }
+function sendFile(srcPath,destPath,category){
+    let categoryPath= path.join(destPath,category);
+    if(fs.existsSync(categoryPath)==false){
+        fs.mkdirSync(categoryPath);
+    }
+    let fileName= path.basename(srcPath);
+    let destFilePath= path.join(categoryPath,fileName);
+    fs.copyFileSync(srcPath,destFilePath);
+    fs.unlinkSync(srcPath);
+}
+function getCategory(file){
+    let extension= path.extname(file).slice(1);
+    // console.log(`extesnion of ${file} is ${extenssion}`);
+     for(type in types){
+        let cTypeArray= types[type];
+        for(let i=0;i<cTypeArray.length;i++){
+            if(cTypeArray[i]==extension){
+                return type
+            }
+        }
+    }
+
+
+}
+
 function helpFn(){
     console.log(`
     node indexe.js tree "directoryPath"
