@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-projects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "utility.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshuk17/NodeJS-Projects.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin":{
+      "HarshOS":"index.js"
+    },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/harshuk17/NodeJS-Projects/issues"
+  },
+  "homepage": "https://github.com/harshuk17/NodeJS-Projects#readme"
+  
+}
