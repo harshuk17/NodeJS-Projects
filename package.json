@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "bin":{
-      "HarshOS":"index.js"
-    },
+  "harshDeveloper": "./fileorganizer/index.js"
+  },
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/harshuk17/NodeJS-Projects/issues"
