@@ -55,6 +55,7 @@ function sendFile(srcPath,destPath,category){
     let destFilePath= path.join(categoryPath,fileName);
     fs.copyFileSync(srcPath,destFilePath);
     fs.unlinkSync(srcPath);
+    console.log("All files are arranged according to it's type");
 }
 function getCategory(file){
     let extension= path.extname(file).slice(1).toLowerCase(); ;
