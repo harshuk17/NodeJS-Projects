@@ -6,6 +6,7 @@ const path= require('path');
 const helpObj= require("../commands/help");
 const treeObj= require("../commands/tree");
 const organizeObj=require("../commands/organize");
+const utilityObj= require("../utility")
 // console.log(inputArr);
 // console.log("helloo");
 
@@ -16,11 +17,7 @@ const organizeObj=require("../commands/organize");
 
 let command=inputArr[0];
 let destinationPath ; 
-let types = {
-    photos: ['JPG'],
-    video: ['MP4'],
-    iphone: ['MOV']
-};
+let types = utilityObj.utilityKey;
 switch(command){
     case "tree":
         treeObj.treeKey(inputArr[1]);

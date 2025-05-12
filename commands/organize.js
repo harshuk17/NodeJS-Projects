@@ -1,5 +1,8 @@
 const fs= require("fs");
 const path=require("path");
+const utilityObj= require("../utility")
+let types = utilityObj.utilityKey;
+
 function organizeFn(dirPath) {
     // Step 1: check if the path is provided
     if (dirPath == undefined) {
@@ -54,7 +57,7 @@ function sendFile(srcPath,destPath,category){
     fs.unlinkSync(srcPath);
 }
 function getCategory(file){
-    let extension= path.extname(file).slice(1);
+    let extension= path.extname(file).slice(1).toLowerCase(); ;
     // console.log(`extesnion of ${file} is ${extenssion}`);
      for(type in types){
         let cTypeArray= types[type];
@@ -67,6 +70,6 @@ function getCategory(file){
 
 
 }
-module.export={
+module.exports={
     organizeKey:organizeFn
 }
